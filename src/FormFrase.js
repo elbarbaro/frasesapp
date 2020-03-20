@@ -8,6 +8,8 @@ class FormFrase extends React.Component {
         this.txtSignificado = React.createRef();
         this.txtNOfensividad = React.createRef();
         this.txtContexto = React.createRef();
+        this.addFrase = props.addFrase;
+        this.sendFrases = props.sendFrases;
     }
 
     submitFormulario = (e) => {
@@ -22,6 +24,23 @@ class FormFrase extends React.Component {
         console.log(significado);
         console.log(ofensividad);
         console.log(contexto);
+
+
+        this.limpiarCampos();
+
+        this.props.addFrase({
+            contenido: contenido,
+            significado: significado,
+            ofensividad: ofensividad,
+            contexto: contexto
+        });
+    }
+
+    limpiarCampos = () => {
+        this.txtContenido.current.value = "";
+        this.txtSignificado.current.value = "";
+        this.txtNOfensividad.current.value = "1";
+        this.txtContexto.current.value = "";
     }
 
     render() {
@@ -39,7 +58,7 @@ class FormFrase extends React.Component {
                     <label>Nivel ofensividad</label>
                     <select ref={ this.txtNOfensividad }>
                         <option value="1">Leve</option>
-                        <option value="2">No tal leve</option>
+                        <option value="2">No tan leve</option>
                         <option value="3">Moderado</option>
                         <option value="4">Fuera de tono</option>
                         <option value="5">Ofensa</option>
@@ -50,6 +69,7 @@ class FormFrase extends React.Component {
                     <input type="text" ref={ this.txtContexto } />
                 </div>
                 <input type="submit" value="Crear" />
+                <button type="button" onClick={ this.props.sendFrases }>Enviar</button>
             </form>
         );
     }
